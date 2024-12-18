@@ -21,7 +21,7 @@ public class MySQLConnection {
 
     static {
         try (
-                Reader in = Files.newBufferedReader(Path.of("/src/main/resources/database.properties"), StandardCharsets.UTF_8)
+                Reader in = Files.newBufferedReader(Path.of("src/main/resources/database.properties"), StandardCharsets.UTF_8)
         ) {
             properties.load(in);
             System.out.println("File Read...");

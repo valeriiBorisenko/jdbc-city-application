@@ -1,8 +1,8 @@
 package se.lexicon;
 
 import se.lexicon.dao.CityDao;
+import se.lexicon.dao.CityDaoJDBC;
 import se.lexicon.model.City;
-import se.lexicon.model.CityDaoJDBC;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,6 +13,7 @@ public class Main {
         // System.out.println(cityDao.findById(5));
         // System.out.println(cityDao.findByCode("NLD"));
         // System.out.println(cityDao.findByName("Ede"));
+        //System.out.println(cityDao.findAll());
         // System.out.println(cityDao.add(city));
         //System.out.println(cityDao.update(citUpdate));
         //System.out.println(cityDao.delete(cityUpdate));

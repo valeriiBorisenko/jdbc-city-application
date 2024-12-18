@@ -1,11 +1,8 @@
-package se.lexicon.model;
+package se.lexicon.dao;
 
-import se.lexicon.dao.CityDao;
+import se.lexicon.model.City;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +95,33 @@ public class CityDaoJDBC implements CityDao {
     }
 
     @Override
+    public List<City> findAll() {
+        String sql = "SELECT * FROM city";
+        List<City> cities = new ArrayList<>();
+
+        try (
+                Connection connection = getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql)
+                ) {
+            while (resultSet.next()) {
+                int cityId = resultSet.getInt("id");
+                String cityName = resultSet.getString("name");
+                String cityCountryCode = resultSet.getString("countryCode");
+                String cityDistrict = resultSet.getString("district");
+                int cityPopulation = resultSet.getInt("population");
+
+                cities.add(new City(cityId, cityName, cityCountryCode, cityDistrict, cityPopulation));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cities;
+    }
+
+    @Override
     public City add(City city) {
         String sql = "INSERT INTO city (name, countryCode, district, population) VALUES(?,?,?,?)";
         try (
@@ -132,7 +156,7 @@ public class CityDaoJDBC implements CityDao {
 
         try (
                 Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
 
             preparedStatement.setString(1, city.getName());
